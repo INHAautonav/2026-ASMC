@@ -1,19 +1,34 @@
-# OS / editor
-.DS_Store
-*.swp
-*.swo
-*~
+# Build
+build/
+devel/
+install/
+log/
+logs/
+catkin_generated/
+atomic_configure/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# IDE
 .vscode/
 .idea/
+*.swp
 
-# External repos — nested git clones (see scripts/clone-external.sh)
-external/**
-!external/README.md
+# Data & checkpoints
+data/
+checkpoints/
+*.bag
+*.bagidx
 
-# Docs — large PDFs/archives stay local (see docs/README.md)
-docs/**
-!docs/README.md
-
-# Local env
+# Env
 .env
 .env.local
+
+# OS
+.DS_Store
