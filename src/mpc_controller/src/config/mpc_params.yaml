@@ -1,0 +1,50 @@
+# =========================================================
+# MPC Configuration
+# =========================================================
+
+control_frequency: 20.0
+
+mpc:
+  horizon: 14
+  dt: 0.1
+  max_iterations: 25
+  wheelbase: 3.0
+
+cost:
+  path_error: 4.0
+  heading_error: 3.0      # 6.0→3.0: 과도한 heading 보정이 오버슈트 유발
+  speed_error: 2.0        # 3.0→2.0: 급정거 방지
+  control: 1.25            # 2.0→1.0: steer effort 페널티 완화
+  control_rate: 10.0      # 조향 변화율 억제 (accel은 cost_function 내부에서 *0.05)
+  terminal: 8.0
+
+solver:
+  lr_init: 0.05
+  lr_min: 0.0001
+  convergence_eps: 0.001
+  line_search_steps: 7
+
+constraints:
+  steering:
+    max_angle: 0.6981     # ~40 deg [rad]
+    max_rate: 1.0         # 0.4→1.0: 너무 작으면 solver 출력이 매 사이클 잘려서 흔들림
+  acceleration:
+    max_forward: 2.0
+    max_reverse: -5.0
+  velocity:
+    min: 0.0
+    max: 60.0
+
+planning:
+  ref_window: 700
+  target_vel: 10.0
+  curve_vel_sharp: 4.0
+  curve_vel_mid:   5.5
+  curve_vel_mild:  7.0
+  curve_th_sharp:  0.080
+  curve_th_mid:    0.035
+  curve_th_mild:   0.015
+
+# waypoint_file, ref_file — launch 파일에서 $(find mpc_node)로 주입 (경로 무관)
+waypoint_file: ""
+ref_file: ""

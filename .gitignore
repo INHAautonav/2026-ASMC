@@ -1,4 +1,4 @@
-# Build
+# Build (catkin)
 build/
 devel/
 install/
@@ -6,6 +6,11 @@ log/
 logs/
 catkin_generated/
 atomic_configure/
+.catkin_workspace
+.catkin_tools/
+
+# Docker local overrides
+.env
 
 # Python
 __pycache__/
@@ -29,6 +34,8 @@ checkpoints/
 # Env
 .env
 .env.local
+
+# Submodule: morai_msgs (beta_drive @ 45c6baf)
 
 # OS
 .DS_Store
