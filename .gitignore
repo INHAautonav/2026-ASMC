@@ -25,9 +25,9 @@ venv/
 .idea/
 *.swp
 
-# Data & checkpoints
-data/
-checkpoints/
+# Data & checkpoints (repo root only — mgeo_toolkit/data is tracked)
+/data/
+/checkpoints/
 *.bag
 *.bagidx
 
@@ -36,6 +36,15 @@ checkpoints/
 .env.local
 
 # Submodule: morai_msgs (beta_drive @ 45c6baf)
+
+# Learning by Cheating data (not in git)
+src/learning_by_cheating/data/
+src/learning_by_cheating/checkpoints/
+src/learning_by_cheating/logs/
+
+# KATRI map Unity meta (not needed at runtime)
+R_KR_PG_KATRI/*.meta
+
 
 # OS
 .DS_Store

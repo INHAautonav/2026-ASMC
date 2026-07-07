@@ -1,13 +1,20 @@
 # integration (논리 그룹)
 
-ROS↔UDP 브리지, 런치, 배포 진입점. **2차 통합 예정.**
+MORAI bridge·UDP·런타임 연동.
 
-| 예정 | 담당 | 출처 |
+| 경로 | 내용 | 상태 |
 |------|------|------|
-| MORAI bridge, UDP 어댑터 | 안승현, 정윤태 | `aim_ws` bridge 스크립트 |
-| 통합 launch | 전원 | `integration_launch` 확장 |
+| `scripts/bridge.sh` | roscore + rosbridge (beta_drive 검증) | ✅ |
+| `scripts/wait_morai_topic.sh` | MORAI 토픽 대기 | ✅ |
+| `scripts/diagnose_morai_bridge.sh` | 연결 진단 | ✅ |
+| `config/morai_bridge.env` | Bridge 포트·ROS env | ✅ |
+| UDP 전환 | planning 팀 | ⬜ `feature/yuntae-*` |
 
-## 수정 범위
+## 사용법
 
-- `src/integration_*` 패키지, `launch/`, `scripts/`
-- 대회 배포 경로(UDP `Ctrl_cmd`) 변경 시 **반드시 planning 리뷰**
+```bash
+./scripts/bridge.sh                    # 터미널 1
+./scripts/diagnose_morai_bridge.sh     # 연결 확인
+```
+
+MORAI 시뮬 연동 smoke는 담당자가 로컬에서 검증합니다.
