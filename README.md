@@ -1,15 +1,25 @@
-# 2026 AI·SW Mobility Competition — Autonav
+# 2026-ASMC
 
 **2026 대학생 AI·SW 모빌리티 경진대회** (AI 융합 자율주행 부문) 팀 **통합 개발 코드** 저장소입니다.
 
+> Repo 이름은 대회 약자(ASMC)를 사용합니다. 로컬 경로·셸 변수: `$ASMC`
+
 - **팀원**: 정윤태, 양서준, 이강태, 안승현, 장원태, 손재호
-- **GitHub**: https://github.com/ahnsh03/2026-ai-sw-mobility-competition-autonav
+- **GitHub**: https://github.com/INHAautonav/2026-ASMC
+- **조직**: [INHAautonav](https://github.com/INHAautonav)
 
 ## 클론
 
 ```bash
-git clone https://github.com/ahnsh03/2026-ai-sw-mobility-competition-autonav.git
-cd 2026-ai-sw-mobility-competition-autonav
+git clone https://github.com/INHAautonav/2026-ASMC.git
+cd 2026-ASMC
+```
+
+로컬 워크스페이스에 둘 때:
+
+```bash
+cd "$AIM_PROJECT"
+git clone https://github.com/INHAautonav/2026-ASMC.git
 ```
 
 ## 브랜치·PR
@@ -20,7 +30,7 @@ cd 2026-ai-sw-mobility-competition-autonav
 ## 디렉터리 (예정)
 
 ```
-2026-ai-sw-mobility-competition-autonav/
+2026-ASMC/
 ├── perception/          # 인지 모듈
 ├── planning_control/    # MPC·플래너
 ├── integration/         # ROS bridge, 실행·런치
