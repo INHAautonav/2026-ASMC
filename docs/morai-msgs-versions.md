@@ -1,0 +1,113 @@
+# MORAI morai_msgs 버전 매핑
+
+> **최종 수정:** 2026-07-07  
+> 통합 시 **단일 submodule** 기준을 정하고, 레거시 코드는 필드 차이를 인지해야 합니다.
+
+## 1. upstream 브랜치·태그 정리
+
+저장소: [MORAI-Autonomous/MORAI-ROS_morai_msgs](https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs)
+
+| Git ref | 커밋 (요약) | MORAI SIM 대응 | msg 수 | 비고 |
+|---------|-------------|----------------|--------|------|
+| **`beta_drive`** | `45c6baf` Competition msg add | **대회 공식** (K-City Competition License) | **101** | 주최측 공지 브랜치 |
+| **`26.R1`** (브랜치) | `4c9be6f` add angular_velocity | **26.R1** (h2·h3 포함) | 91 | 시뮬 최신 일반 라인 |
+| **`main`** | `ccbf951` Merge 26.R1 | = `26.R1` 반영 후 기본 브랜치 | 91 | 앞으로 일반 릴리스 기준 |
+| **`26.r1`** (태그) | `98c83d1` Merge PR #19 | 26.R1 머지 시점 | 91 | `26.R1` 브랜치와 **주석·포맷** 차이 있음 |
+| **`24.r2`** (태그) | `d1ce163` | **24.R2** | 91 | 구버전 (TL msg 일부만) |
+| **`master`** (구 clone) | `a561daa` (mkdocs) | **26.R1 계열** | 91 | 공지 전에 clone한 폴더 — **pre-26 아님** |
+
+### `26.R1` 브랜치 vs `main`
+
+- **`26.R1`**: MORAI SIM **26.R1** 릴리스용 msg 스냅샷 (개발 브랜치).
+- **`main`**: `26.R1`을 merge한 **기본 브랜치**. msg 내용은 `26.R1`과 동일 계열.
+- **`26.r1` 태그**: 예전 `master`에 26.R1을 merge한 커밋 — 브랜치 대비 **주석이 제거된** 버전이 섞여 있을 수 있음.
+
+### `beta_drive` vs `26.R1`
+
+`beta_drive`는 `26.R1`에서 파생한 것이 **아닙니다**. 별도 라인에서 대회 전용 msg가 추가·변경되었습니다.
+
+**`beta_drive`에만 있는 msg (10종)**
+
+`Competition`, `EgoNoisyStatus`, `EgoDetailStatus`, `AttachmentDeviceState`, `GripperState`, `MSITCustomMessage`, `ENU`, `RPY`, `RobotPose`, `XYZ`
+
+**필드가 바뀌는 대표 msg (통합 시 주의)**
+
+| msg | `26.R1` | `beta_drive` (대회) |
+|-----|---------|---------------------|
+| `CtrlCmd` | `front_steer`, `rear_steer` | **`steering`** (단일) |
+| `EgoVehicleStatus` | `front_steer_angle`, `rear_steer_angle`, `angular_velocity` | **`wheel_angle`** 등 단순화 |
+
+`mpc_ws`는 `cmd.steering`을 쓰므로 **beta_drive와 일치**합니다.
+
+---
+
+## 2. 신호등 (Traffic Light) — msg vs 런타임 토픽
+
+### .msg 정의
+
+**`beta_drive`와 `26.R1` 모두** 아래 TL 관련 msg가 **존재**합니다.
+
+- `IntscnTL`, `TrafficLight`, `GetTrafficLightStatus`, `MoraiTLInfo`, `MoraiTLIndex`, `Lamps`, `SetTrafficLight`
+
+→ “대회 브랜치에 신호등 **msg가 없다**”는 말은 **사실이 아님**.  
+→ 이슈는 **런타임에 토픽이 비거나 맵별로 다름** 쪽에 가깝습니다.
+
+### 런타임 (팀 검증)
+
+| 토픽/서비스 | KATRI / 개발 | 비고 |
+|-------------|--------------|------|
+| `/Lamps_topic` | **비어 있음** | LBC에서 사용 안 함 |
+| `/IntscnTL_topic`, `/GetTrafficLightStatus` 등 | 맵·시뮬 설정에 따라 가변 | LBC가 가용 토픽 자동 구독 |
+| `/Service_MoraiEventCmd` | **turnSignal** 폴링 | 좌회전 의도 → BEV 신호등 색 보정 |
+
+**통합 시:** 학습·개발은 `26.R1` sim(h3) + `IntscnTL` 구독 가능. 대회 당일은 **beta_drive + 실제 배포 토픽**으로 재검증 필요.
+
+---
+
+## 3. 팀 레포별 실측 기준 (로컬 clone 검증)
+
+| 레포 | 담당 | 실측 일치 | 사용자 기억 | 검증 결과 |
+|------|------|-----------|-------------|-----------|
+| **`mpc_ws`** | 정윤태·양서준 | **`beta_drive` 100%** (101 msg, 내용 0 diff) | beta_drive | ✅ 일치 |
+| **`aim_ws` `va_seunghyun`** | 안승현 | **`26.R1` 필드 + 주석 제거** (91 msg). beta와 **6개 msg** 필드 차이 | 26 이전 → h2 업데이트 | △ **26.R1 계열** (jang과 동일 필드, 주석만 다름). `CtrlCmd`: `front_steer`/`rear_steer`. LBC는 `EgoVehicleStatus.front_steer_angle` 사용 |
+| **`aim_ws` `jang`** | 장원태 | **`26.R1` 브랜치 100%** (91 msg, 0 diff) | 26.r1.h3 | ✅ **26.R1 = h3 sim msg 라인** |
+| **`aim_ws` `ochang`** | 이강태 | va와 유사 stripped, beta와 3개 diff | 대회 무관 | ⚠️ 구버전·통합 제외 |
+| **`morai-3d-detection`** | 손재호 | msg 폴더 비어 있음. `morai_3d_live.py`만 `EgoVehicleStatus` 등 import | h2~h3 | △ **오프라인 데이터** 위주 — msg 빌드 의존 낮음. live는 `26.R1` 필드명 가정 가능 |
+| **`2026-ASMC`** (현재) | 통합 | **`beta_drive` @ `45c6baf`** (로컬 symlink → `external/morai/...-beta_drive`) | — | 통합 시 submodule `beta_drive`로 전환 예정 |
+
+### `external/morai/` 로컬 clone (참조·diff용)
+
+| 폴더 | 브랜치 | 커밋 | 용도 |
+|------|--------|------|------|
+| `MORAI-ROS_morai_msgs-beta_drive` | `beta_drive` | `45c6baf` | **대회 기준** — ASMC 빌드·당일 PC |
+| `MORAI-ROS_morai_msgs` | **`26.R1`** | `4c9be6f` | **시뮬 26.R1 h3 참조** — beta와 diff 비교 |
+
+```bash
+diff -ru external/morai/MORAI-ROS_morai_msgs/msg \
+         external/morai/MORAI-ROS_morai_msgs-beta_drive/msg
+```
+
+**정렬 규약 (통합 후 필수):** [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
+
+## 4. 통합 시 beta 정렬
+
+통합 **시작 전** 확정된 규칙은 **[morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)** 를 따릅니다.
+
+요약:
+- ASMC catkin·대회 = **`beta_drive` submodule 단일**
+- 레거시(26.R1 필드) 이식 PR = **merge 전 beta 필드로 수정**
+- 로컬 `external/morai/MORAI-ROS_morai_msgs` (`26.R1`)는 **diff 참고용만**
+
+### morai-3d-detection
+
+- 학습 데이터는 이미 수집됨 → msg 변경 영향 **낮음**
+- `morai_3d_live.py` 재연동 시 `EgoVehicleStatus` 필드명만 beta에 맞게 수정
+
+## 5. 버전 선택 요약
+
+| 용도 | 권장 ref |
+|------|----------|
+| **대회·ASMC submodule** | `beta_drive` |
+| **26.R1 h3 시뮬 일상 개발** | sim은 h3, **코드는 beta 필드로 맞추는 중** |
+| **신호등 BEV / Expert** | msg는 양쪽 다 있음. 런타임 토픽은 **맵별 검증** + `MoraiEventCmd` |
+| **레거시 참고만** | `external/morai/MORAI-ROS_morai_msgs` (26.R1), `ochang` 브랜치 |

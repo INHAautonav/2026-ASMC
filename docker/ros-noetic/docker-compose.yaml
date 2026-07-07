@@ -1,0 +1,28 @@
+# 팀 ROS catkin 워크스페이스용 (MORAI bridge, planning, integration)
+services:
+  asmc-ros-noetic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: asmc/ros-noetic:dev
+    container_name: asmc-ros-noetic
+    network_mode: host
+    gpus: all
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - __NV_PRIME_RENDER_OFFLOAD=1
+      - __GLX_VENDOR_LIBRARY_NAME=nvidia
+      - __VK_LAYER_NV_optimus=NVIDIA_only
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../..:/root/ws:rw
+      - /etc/localtime:/etc/localtime:ro
+      - ${ASMC_DATA:-../data}:/data:ro
+    shm_size: "2gb"
+    stdin_open: true
+    tty: true
+    command: ["tail", "-f", "/dev/null"]
