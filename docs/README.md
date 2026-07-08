@@ -2,7 +2,7 @@
 
 > **대상:** 팀원 전원  
 > **통합 리드:** 안승현  
-> **최종 수정:** 2026-07-07
+> **최종 수정:** 2026-07-08
 
 ## 읽는 순서
 
@@ -14,9 +14,10 @@
 6. [repository-layout.md](./repository-layout.md) — 폴더·파트 격리
 7. [docker-guide.md](./docker-guide.md) — 컨테이너 빌드·재생성
 8. [integration-plan.md](./integration-plan.md) — 통합 진행 상황
-9. [sim-verification-checklist.md](./sim-verification-checklist.md) — **MORAI 시뮬 검증 (담당별)**
-10. [morai-msgs-versions.md](./morai-msgs-versions.md) — 레포별 morai_msgs 버전
-11. [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) — **beta_drive 정렬 규약 (통합·일상 작업)**
+9. [planning-behavior-handoff.md](./planning-behavior-handoff.md) — behavior↔planner↔mpc 연동 규약
+10. [sim-verification-checklist.md](./sim-verification-checklist.md) — **MORAI 시뮬 검증 (담당별)**
+11. [morai-msgs-versions.md](./morai-msgs-versions.md) — 레포별 morai_msgs 버전
+12. [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) — **beta_drive 정렬 규약 (통합·일상 작업)**
 
 ## 본 repo에 포함되는 것
 

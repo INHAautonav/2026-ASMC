@@ -1,7 +1,7 @@
 # 개발 환경 규약
 
 > **기준:** 대회 규정 Ubuntu 20.04 + ROS1 Noetic  
-> **최종 수정:** 2026-07-07
+> **최종 수정:** 2026-07-08
 
 ## 1. 대회 규정 vs 팀 개발 환경
 
@@ -53,6 +53,10 @@
 | CUDA (컨테이너) | 11.8 |
 | 호스트 드라이버 | CUDA 12.x 지원 드라이버 (하위 호환) |
 
+### 주요 apt 패키지 (ROS 컨테이너)
+
+- `libyaml-cpp-dev` — `behavior_planner` 빌드 (route YAML 파싱)
+
 ### 주요 pip 패키지 (ROS 컨테이너)
 
 - LBC: `numpy`, `opencv-python-headless`, `scipy` — `docker/ros-noetic/requirements-lbc.txt`
@@ -63,7 +67,7 @@
 
 | 이미지 | 경로 | 용도 | 담당 파트 |
 |--------|------|------|-----------|
-| `asmc/ros-noetic:dev` | `docker/ros-noetic/` | catkin, MORAI bridge, MPC, 로깅 | planning, integration, learning |
+| `asmc/ros-noetic:dev` | `docker/ros-noetic/` | catkin, MORAI bridge, behavior_planner, MPC, 로깅 | planning, integration, learning |
 | `asmc/perception-train:dev` | `docker/perception-train/` | PyTorch 학습·추론 | perception |
 
 **왜 2개인가:** ROS desktop-full과 CUDA PyTorch를 한 이미지에 넣으면 용량·충돌·재빌드 비용이 큼.  

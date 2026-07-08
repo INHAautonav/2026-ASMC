@@ -12,7 +12,6 @@
 <launch>
   <node pkg="planner" type="frenet_planner_node" name="frenet_planner_node" output="screen">
     <rosparam command="load" file="$(find planner)/src/config/params.yaml" />
-    <param name="waypoint_file" value="$(find mpc_node)/src/config/path.txt" />
-    <param name="ref_file" value="$(find mpc_node)/src/config/ref.txt" />
+    <param name="waypoint_file" value="$(find mpc_node)/src/config/path_route1.txt" />
   </node>
 </launch>

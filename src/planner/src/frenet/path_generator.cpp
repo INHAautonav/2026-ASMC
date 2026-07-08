@@ -18,8 +18,6 @@ std::vector<double> SampleRange(const SamplingRange& r) {
 }
 
 // 0부터 T까지 dt 간격의 시간 샘플 (끝점 T는 항상 정확히 포함)
-// lateral/longitudinal이 같은 T, 같은 dt로 호출되면 항상 동일한 배열이 나와야
-// CombineLateralLongitudinal에서 인덱스 대 인덱스로 그대로 합칠 수 있다.
 std::vector<double> SampleTimes(double T, double dt) {
     std::vector<double> times;
     for (double t = 0.0; t < T - 1e-9; t += dt) {
@@ -30,8 +28,6 @@ std::vector<double> SampleTimes(double T, double dt) {
 }
 
 // 횡방향 quintic 하나를 시간 샘플에 맞춰 FrenetPath로 변환 (d, d_d, d_dd만 채움)
-// jerk_cost_lat = Jt(d(t))을 다항식 계수로부터 닫힌 형태로 미리 계산해둔다
-// (계수는 이 함수를 벗어나면 사라지므로 cost.hpp가 나중에 계산할 방법이 없음).
 FrenetPath SampleLateralQuintic(const QuinticPolynomial& poly, const std::vector<double>& times) {
     FrenetPath path;
     path.t = times;
@@ -53,7 +49,6 @@ FrenetPath SampleLateralQuintic(const QuinticPolynomial& poly, const std::vector
 }
 
 // 종방향 quintic 하나를 시간 샘플에 맞춰 FrenetPath로 변환 (s, s_d, s_dd만 채움)
-// delta_s(Δsi)는 호출 측(Following/Stopping/Merging)이 채워준다.
 FrenetPath SampleLongitudinalQuintic(const QuinticPolynomial& poly, const std::vector<double>& times) {
     FrenetPath path;
     path.t = times;
@@ -75,7 +70,6 @@ FrenetPath SampleLongitudinalQuintic(const QuinticPolynomial& poly, const std::v
 }
 
 // 종방향 quartic 하나(velocity keeping)를 시간 샘플에 맞춰 FrenetPath로 변환
-// delta_s_dot(Δṡi)는 호출 측(GenerateVelocityKeepingCandidates)이 채워준다.
 FrenetPath SampleLongitudinalQuartic(const QuarticPolynomial& poly, const std::vector<double>& times) {
     FrenetPath path;
     path.t = times;
@@ -340,39 +334,21 @@ std::vector<FrenetPath> CombineLateralLongitudinal(const std::vector<FrenetPath>
 
 // =========================================================
 // [Sec.VI 3단] 결합 이후 곡률 필터링
-//
-// combined는 lateral을 고속(d(t)) 모드로 생성했으므로 d,d_d,d_dd는 시간미분.
-// FrenetToCartesian은 arc-length 미분(d,d',d'')을 받으므로, 매 샘플마다
-// TimeDerivToArcDeriv로 먼저 변환한다 (frenet_converter.hpp의 "고속 어댑터").
-// s_dot이 0에 가까우면 이 어댑터 자체가 정의역을 벗어나므로(0 나눗셈),
-// 해당 궤적은 곡률 계산 없이 바로 무효 처리한다.
 // =========================================================
 
 void FilterByCurvature(std::vector<FrenetPath>& combined,
                         const RefLine& ref,
                         const KinematicLimits& limits) {
-    constexpr double kMinSpeedForCurvatureCheck = 0.1;  // [m/s], 고속 모드 전제 하한
-
+    // 시간미분->호길이미분(TimeDerivToArcDeriv, s_dot로 나눔) 기반 계산은 저속에서
+    // 발산해 STOP/EMERGENCY처럼 정지에 수렴하는 후보를 전부 무효화시켰다
+    // (frenet_converter.hpp의 ComputeGeometricPath 설계 노트 참고). 위치(x,y)
+    // 기반 기하학적 곡률로 대체해 고속/저속 구분 없이 일관되게 판정한다.
     for (auto& path : combined) {
         if (!path.valid) continue;
 
-        for (size_t i = 0; i < path.t.size(); i++) {
-            if (std::abs(path.s_d[i]) < kMinSpeedForCurvatureCheck) {
-                // TODO(추후 개발 필요, FSM 저속 처리와 함께): 저속에서는 d(s) 모드 +
-                // 별도 곡률 계산이 필요. 지금은 고속 모드 전제가 깨지므로 무효 처리.
-                path.valid = false;
-                break;
-            }
-
-            double d_prime, d_pprime;
-            TimeDerivToArcDeriv(path.s_d[i], path.s_dd[i], path.d_d[i], path.d_dd[i],
-                                 d_prime, d_pprime);
-
-            RefPoint rp = Interpolate(ref, path.s[i]);
-            CartesianState cs = FrenetToCartesian(rp, path.s[i], path.s_d[i], path.s_dd[i],
-                                                   path.d[i], d_prime, d_pprime);
-
-            if (std::abs(cs.kappa) > limits.max_curvature) {
+        GeometricPath geo = ComputeGeometricPath(path.s, path.d, ref);
+        for (double k : geo.kappa) {
+            if (std::abs(k) > limits.max_curvature) {
                 path.valid = false;
                 break;
             }
@@ -385,18 +361,18 @@ void FilterByCurvature(std::vector<FrenetPath>& combined,
 // =========================================================
 
 // AVOID 모드는 PlannerCommand.avoidance_d_offset을 그대로 lateral 목표 중심으로 사용.
-// LANE_CHANGE_*는 물리적 차선폭 파라미터가 아직 설정에 없어 TODO로 남김.
-double ResolveLateralOffset(const PlannerCommand& cmd) {
+// LANE_CHANGE_*는 d 양의 방향이 좌측(FrenetToCartesian의 n_r 정의와 동일)이므로
+// LEFT는 +lane_width, RIGHT는 -lane_width.
+double ResolveLateralOffset(const PlannerCommand& cmd, double lane_width) {
     switch (cmd.mode) {
         case AVOID:
             return cmd.avoidance_d_offset;
 
         case LANE_CHANGE_LEFT:
+            return lane_width;
+
         case LANE_CHANGE_RIGHT:
-            // TODO(추후 개발 필요): lane_width 설정값이 config에 추가되면
-            // target_lane * lane_width 로 목표 오프셋을 계산해야 함.
-            // 지금은 차선 변경 오프셋을 반영하지 않고 0으로 둔다.
-            return 0.0;
+            return -lane_width;
 
         default:
             return 0.0;  // 차선 중앙 유지
@@ -407,10 +383,11 @@ std::vector<FrenetPath> ResolveManeuver(const FrenetState& start,
                                          const PlannerCommand& cmd,
                                          const RefLine& ref,
                                          const PathGeneratorConfig& cfg,
-                                         const KinematicLimits& limits) {
+                                         const KinematicLimits& limits,
+                                         double lane_width) {
     // 1. lateral 후보 (필요 시 목표 오프셋만큼 d1 격자를 평행이동)
     PathGeneratorConfig lateral_cfg = cfg;
-    const double d_offset = ResolveLateralOffset(cmd);
+    const double d_offset = ResolveLateralOffset(cmd, lane_width);
     lateral_cfg.lateral_d1.min += d_offset;
     lateral_cfg.lateral_d1.max += d_offset;
 
