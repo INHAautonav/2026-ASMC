@@ -21,12 +21,15 @@
 
 | 모듈 | 역할 | ASMC 경로 | 담당 |
 |------|------|-----------|------|
-| Expert | rule + route planner, τ* 로깅 | (학습 전용) | 안승현 |
-| PA | GT BEV → τ (teacher) | `src/learning_*` (예정) | 안승현 |
-| SA_perc | 센서 → BEV̂ | `src/perception_*` (예정) | 손재호, 장원태 |
-| SA_plan | BEV̂ → τ | `src/learning_*` (예정) | 안승현 |
-| MPC | τ 추종 → Ctrl_cmd | `src/mpc_controller/`, `src/planner/` | 정윤태, 양서준, 이강태 |
-| Bridge | ROS → UDP | `src/integration_*` (예정) | 안승현, 정윤태 |
+| Expert / Behavior | rule + route, τ* 로깅 | `src/behavior_planner/` (+ LBC 학습 경로) | 정윤태·양서준 / 안승현 |
+| PA | GT BEV → τ (teacher) | `src/learning_by_cheating/` | 안승현 |
+| SA_perc | 센서 → BEV̂ | `src/perception/morai_3d_detection/` | 손재호, 장원태 |
+| SA_plan | BEV̂ → τ | `src/learning_by_cheating/` | 안승현 |
+| Frenet + MPC | τ 생성·추종 → Ctrl_cmd | `src/planner/`, `src/mpc_controller/` | 이강태 / 정윤태·양서준 |
+| Scenario / gRPC | 시나리오·시뮬 API | `tools/aim_scenario_runner/`, `tools/grpc_inha_univ/` | 장원태 |
+| Bridge | ROS / UDP | `scripts/bridge.sh` (UDP 확장 예정) | 안승현, 정윤태 |
+
+팀원별 파일 단위 가이드: [team-dev-guide.md](./team-dev-guide.md)
 
 ### PA 정의 (팀 합의)
 

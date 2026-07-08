@@ -1,20 +1,19 @@
 # integration (논리 그룹)
 
-MORAI bridge·UDP·런타임 연동.
+MORAI bridge·UDP·런타임 연동. **실제 스크립트는 repo 루트 `scripts/`** (이 폴더는 README만).
 
-| 경로 | 내용 | 상태 |
-|------|------|------|
-| `scripts/bridge.sh` | roscore + rosbridge (beta_drive 검증) | ✅ |
-| `scripts/wait_morai_topic.sh` | MORAI 토픽 대기 | ✅ |
-| `scripts/diagnose_morai_bridge.sh` | 연결 진단 | ✅ |
-| `config/morai_bridge.env` | Bridge 포트·ROS env | ✅ |
-| UDP 전환 | planning 팀 | ⬜ `feature/yuntae-*` |
+| 경로 | 내용 | 담당 | 상태 |
+|------|------|------|------|
+| `scripts/bridge.sh` | roscore + rosbridge | 안승현 | ✅ |
+| `scripts/wait_morai_topic.sh` | 토픽 대기 | 안승현 | ✅ |
+| `scripts/diagnose_morai_bridge.sh` | 연결 진단 | 안승현 | ✅ |
+| `config/morai_bridge.env` | Bridge 포트·ROS env | 안승현 | ✅ |
+| `tools/grpc_inha_univ/` | gRPC 제어 브릿지 | 장원태 | ✅ |
+| UDP `Ctrl_cmd` | planning | 정윤태 | ⬜ `feature/yuntae-*` |
 
-## 사용법
+상세: [docs/team-dev-guide.md](../../docs/team-dev-guide.md)
 
 ```bash
-./scripts/bridge.sh                    # 터미널 1
-./scripts/diagnose_morai_bridge.sh     # 연결 확인
+./scripts/bridge.sh
+./scripts/diagnose_morai_bridge.sh
 ```
-
-MORAI 시뮬 연동 smoke는 담당자가 로컬에서 검증합니다.

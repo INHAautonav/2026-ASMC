@@ -25,7 +25,7 @@
 | 3 | `aim_ws` learning/LBC/bridge | ✅ PR #2 merged |
 | 4 | `aim_scenario_runner` (jang) | ✅ PR #3 merged |
 | 5 | `morai-3d-detection` (jaeho) | ✅ PR #3 merged |
-| **1b** | **planning-v2:** `behavior_planner` + bridge + 주행 버그픽스 | 🔄 `integrate/planning-v2` (build green, merge 대기) |
+| **1b** | **planning-v2:** `behavior_planner` + bridge + 주행 버그픽스 | ✅ PR #4 merged |
 | 6 | `interfaces/` τ·BEV 확정 | ⬜ [architecture-overview.md](./architecture-overview.md) §5 |
 | — | jang LBC gRPC multi-TL | ⬜ **추후** D-09 검증 후 판단 (통합 차단 아님) |
 | — | morai-3d-detection 시나리오 ROS 연동 (`adb1056`) | ⬜ **추후** — scenario runner `/dataset_control` publisher 선행 필요 |
@@ -35,7 +35,7 @@
 
 | 로컬 clone | Upstream HEAD | 통합 이후 신규 | ASMC 반영 |
 |------------|---------------|----------------|-----------|
-| `mpc_ws` | `72e2a37` (07-08) | **3커밋** — behavior_planner, bridge, 주행 버그픽스 | 🔄 planning-v2 |
+| `mpc_ws` | `72e2a37` (07-08) | **3커밋** — behavior_planner, bridge, 주행 버그픽스 | ✅ PR #4 |
 | `morai-3d-detection` | `adb1056` (07-08) | **1커밋** — `/dataset_control` ROS 연동 | ⬜ defer (반쪽 연동) |
 | `aim_ws-va_seunghyun` | `1ae08b7` (07-05) | 없음 | ✅ 동기화 |
 | `aim_ws-jang` | `e6b282e` (07-06) | 없음 | ✅ 동기화 |
@@ -51,7 +51,7 @@ cd external/team/morai-3d-detection && git pull origin main
 
 | 출처 (GitHub) | ASMC | 상태 |
 |---------------|------|------|
-| [yuntae12-sudo/mpc_ws](https://github.com/yuntae12-sudo/mpc_ws) | `mpc_controller`, `planner`, `behavior_planner`, `integration_launch` | ✅ v1 + 🔄 v2 |
+| [yuntae12-sudo/mpc_ws](https://github.com/yuntae12-sudo/mpc_ws) | `mpc_controller`, `planner`, `behavior_planner`, `integration_launch` | ✅ v1 + v2 (PR #1·#4) |
 | [kante2/aim_ws](https://github.com/kante2/aim_ws) `va_seunghyun` | `learning_by_cheating`, bridge, mgeo | ✅ main |
 | [kante2/aim_ws](https://github.com/kante2/aim_ws) `jang` | `tools/aim_scenario_runner`, `tools/grpc_inha_univ` | ✅ main |
 | [kante2/aim_ws](https://github.com/kante2/aim_ws) `ochang` | — | ❌ skip (`gps_logger` 미사용) |
@@ -118,7 +118,7 @@ KATRI 확장 맵 레이어를 K-city 2025로 제공받을 수 있는지 **MORAI 
 | **1** | `integrate/planning-v1` | morai_msgs submodule, mpc yaml 경로 | ✅ merged |
 | **2** | `integrate/learning` | va_seunghyun LBC/bridge | ✅ merged |
 | **3** | `integrate/scenario-perception` | scenario + 3D detection | ✅ merged |
-| **1b** | `integrate/planning-v2` | behavior_planner + bridge + bugfix | 🔄 build green |
+| **1b** | `integrate/planning-v2` | behavior_planner + bridge + bugfix | ✅ PR #4 merged |
 | **4** | `integrate/interfaces` | τ·BEV·토픽명 합의 | ⬜ |
 | **5** | 팀별 `feature/*` | planning UDP, perception 추론 노드 등 | ASMC 위에서 개발 |
 
@@ -126,7 +126,8 @@ KATRI 확장 맵 레이어를 K-city 2025로 제공받을 수 있는지 **MORAI 
 
 ## 11. 다음 작업 (통합 리드)
 
-1. **`integrate/planning-v2`** 리뷰·merge (behavior_planner + 주행 버그픽스)
-2. 시뮬 검증 — [sim-verification-checklist.md](./sim-verification-checklist.md) §1 planning-v2 항목
-3. D-10: jang+jaeho scenario↔collector ROS 연동 설계
-4. `integrate/interfaces` — architecture §5
+1. **시뮬 검증** — [sim-verification-checklist.md](./sim-verification-checklist.md) (merge 후 전원)
+2. **팀원 일상 개발** — 경로·주의: [team-dev-guide.md](./team-dev-guide.md)
+3. **`integrate/interfaces`** — architecture §5 τ·BEV 확정
+4. D-10: jang+jaeho scenario↔collector ROS 연동
+5. 팀별 `feature/*` — UDP, 추론 노드 등

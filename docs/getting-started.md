@@ -110,4 +110,8 @@ git checkout main && git pull
 git checkout -b feature/<이름>-<기능>
 ```
 
-자세한 규칙: [git-workflow.md](./git-workflow.md)
+- 브랜치 규칙: [git-workflow.md](./git-workflow.md)
+- **팀원별 수정 경로·검증:** [team-dev-guide.md](./team-dev-guide.md)
+- 시뮬 검증: [sim-verification-checklist.md](./sim-verification-checklist.md)
+
+`behavior_planner` 빌드에는 Docker 이미지의 `libyaml-cpp-dev`가 필요합니다 (`./scripts/docker_ros_up.sh build`로 이미지 재생성).

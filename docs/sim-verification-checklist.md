@@ -136,7 +136,9 @@ ip route | grep default | awk '{print $3}'   # WSL → Windows
 
 ## 8. 관련 문서
 
+- [team-dev-guide.md](./team-dev-guide.md) — **팀원별 개발 경로·주의사항**
 - [integration-plan.md](./integration-plan.md) — 통합 단계
 - [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) — msg 정본
 - [getting-started.md](./getting-started.md) — clone·Docker
 - [docker-guide.md](./docker-guide.md) — 컨테이너 사용
+- [planning-behavior-handoff.md](./planning-behavior-handoff.md) — planning 토픽 계약

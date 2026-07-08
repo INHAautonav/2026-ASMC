@@ -97,7 +97,7 @@ Docker Desktop → WSL Integration 활성화, NVIDIA Container Toolkit 확인.
 
 ### MORAI SIM + rosbridge (통합 후)
 
-> bridge 스크립트는 `integrate/learning` 이식 후 `scripts/integration/` 에 추가 예정.
+> Bridge: `./scripts/bridge.sh` (포트 9090). 설정은 `config/morai_bridge.env`.
 
 | 항목 | 내용 |
 |------|------|
