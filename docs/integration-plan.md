@@ -23,8 +23,8 @@
 | 1 | `mpc_ws` → `src/{mpc_controller,planner,integration_launch}` | ✅ |
 | 2 | `morai_msgs` submodule (`beta_drive`) | ✅ `integrate/planning-v1` — Docker catkin green |
 | 3 | `aim_ws` learning/LBC/bridge | ✅ `integrate/learning` |
-| 4 | `aim_scenario_runner` (jang) | ⬜ `integrate/scenario` — LBC 제외 |
-| 5 | `morai-3d-detection` (jaeho) | ⬜ `integrate/perception` |
+| 4 | `aim_scenario_runner` (jang) | ✅ `integrate/scenario-perception` — LBC viz 기본 off |
+| 5 | `morai-3d-detection` (jaeho) | ✅ `integrate/scenario-perception` |
 | 6 | `interfaces/` τ·BEV 확정 | ⬜ [architecture-overview.md](./architecture-overview.md) §5 |
 | — | jang LBC gRPC multi-TL | ⬜ **추후** D-09 검증 후 판단 (통합 차단 아님) |
 
@@ -93,10 +93,9 @@ KATRI 확장 맵 레이어를 K-city 2025로 제공받을 수 있는지 **MORAI 
 | **0** | — | 문서·Docker·beta 규약 | ✅ |
 | **1** | `integrate/planning-v1` | morai_msgs **submodule** 등록, `mpc_params.yaml` 경로 수정, `scripts/build_ws.sh` 검증 | catkin build 전 패키지 green |
 | **2** | `integrate/learning` | `va_seunghyun` → `src/learning_by_cheating/` + bridge·mgeo 등 | beta 필드 마이그레이션, LBC collector/viz ROS 기준 |
-| **3** | `integrate/scenario` | jang `aim_scenario_runner` → `tools/aim_scenario_runner/` (LBC·gRPC viz **미포함**) | runtime·dataset·PNG git 제외 |
-| **4** | `integrate/perception` | `morai-3d-detection` → `src/perception/` (또는 합의 경로) | 학습 Docker smoke |
-| **5** | `integrate/interfaces` | τ·BEV·토픽명 합의, `integration_launch` 확장 | architecture §5 반영 |
-| **6** | 팀별 `feature/*` | planning UDP, perception 추론 노드 등 | ASMC 위에서 개발 |
+| **3** | `integrate/scenario-perception` | scenario → `tools/`, perception → `src/perception/morai_3d_detection/` | catkin green, 시뮬은 [체크리스트](./sim-verification-checklist.md) |
+| **4** | `integrate/interfaces` | τ·BEV·토픽명 합의, `integration_launch` 확장 | architecture §5 반영 |
+| **5** | 팀별 `feature/*` | planning UDP, perception 추론 노드 등 | ASMC 위에서 개발 |
 
 **병렬 가능:** 3(scenario)과 4(perception)은 2(learning) 이후 **서로 독립**하면 동시 PR 가능.
 
@@ -106,7 +105,7 @@ KATRI 확장 맵 레이어를 K-city 2025로 제공받을 수 있는지 **MORAI 
 
 1. **`integrate/planning-v1`** — submodule + build green + mpc yaml 경로
 2. **`integrate/learning`** — va_seunghyun LBC/bridge (jang LBC 제외)
-3. **`integrate/scenario`** — scenario runner only
-4. **`integrate/perception`** — 3D detection
+3. **`integrate/scenario-perception`** — scenario runner + 3D detection
+4. 시뮬 검증 — [sim-verification-checklist.md](./sim-verification-checklist.md)
 5. 팀 리뷰 후 `main` merge
 6. planning 팀: UDP 전환 `feature/yuntae-*`

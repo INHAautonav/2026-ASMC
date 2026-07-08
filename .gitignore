@@ -45,6 +45,20 @@ src/learning_by_cheating/logs/
 # KATRI map Unity meta (not needed at runtime)
 R_KR_PG_KATRI/*.meta
 
+# Scenario runner runtime output
+tools/aim_scenario_runner/runtime/
+tools/aim_scenario_runner/ego_pose_checks/
+
+# Perception datasets and weights (repo外)
+src/perception/morai_3d_detection/dataset/
+src/perception/morai_3d_detection/*.pth
+src/perception/morai_3d_detection/*.pt
+src/perception/morai_3d_detection/pred_vis*/
+src/perception/morai_3d_detection/wandb/
+src/perception/morai_3d_detection/_tmp_verify_out/
+src/perception/morai_3d_detection/gt_vis/
+src/perception/morai_3d_detection/verify_output/
+
 
 # OS
 .DS_Store

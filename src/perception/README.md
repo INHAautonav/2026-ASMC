@@ -1,18 +1,33 @@
 # perception (논리 그룹)
 
-인지 파트. **3차 통합 예정.**
+인지 파트. **3D detection 학습 코드 통합 완료** (`integrate/scenario-perception`).
 
-| 예정 | 담당 | 출처 |
+| 경로 | 담당 | 출처 |
 |------|------|------|
-| ROS 센서 노드 (Camera, LiDAR) | 장원태, 손재호 | `aim_ws` `main` |
-| 3D detection 학습·추론 | 손재호 | `morai-3d-detection` |
-| 시나리오 러너 | 장원태 | `aim_scenario_runner` |
+| `src/perception/morai_3d_detection/` | 손재호 | [sonshiny/morai-3d-detection](https://github.com/sonshiny/morai-3d-detection) |
+| ROS 센서 노드 (Camera, LiDAR) | 장원태 | `aim_ws` `main` — **미이식** |
 
 ## Docker
 
-ML 학습은 **`docker/perception-train/`** 컨테이너 사용.  
-ROS 연동 실험은 **`docker/ros-noetic/`** 와 동일 워크스페이스 마운트.
+| 용도 | 이미지 |
+|------|--------|
+| 학습·추론 | `docker/perception-train/` |
+| ROS live 라벨링 | `docker/ros-noetic/` + `morai_3d_live.py` |
+
+```bash
+cd src/perception/morai_3d_detection
+pip install -r requirements.txt   # 또는 perception-train 컨테이너
+```
+
+## 데이터·체크포인트
+
+- `dataset/`, `*.pth` — **git 제외** (NAS·로컬 `$ASMC_DATA`)
+- 상세: `morai_3d_detection/SETUP_NOTES.md`
+
+## 시뮬 검증
+
+[docs/sim-verification-checklist.md](../../docs/sim-verification-checklist.md) §5 — **손재호**
 
 ## 통합 브랜치
 
-`integrate/perception` (예정)
+`integrate/scenario-perception`
