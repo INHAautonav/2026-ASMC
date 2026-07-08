@@ -22,7 +22,7 @@
 | 0 | `docs/`, Docker, `scripts/`, CONTRIBUTING, **beta 정렬 규약** | ✅ |
 | 1 | `mpc_ws` → `src/{mpc_controller,planner,integration_launch}` | ✅ |
 | 2 | `morai_msgs` submodule (`beta_drive`) | ✅ `integrate/planning-v1` — Docker catkin green |
-| 3 | `aim_ws` learning/LBC/bridge | ⬜ `integrate/learning` — **va_seunghyun 기준** |
+| 3 | `aim_ws` learning/LBC/bridge | ✅ `integrate/learning` |
 | 4 | `aim_scenario_runner` (jang) | ⬜ `integrate/scenario` — LBC 제외 |
 | 5 | `morai-3d-detection` (jaeho) | ⬜ `integrate/perception` |
 | 6 | `interfaces/` τ·BEV 확정 | ⬜ [architecture-overview.md](./architecture-overview.md) §5 |
