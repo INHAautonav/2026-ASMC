@@ -3,7 +3,7 @@
 > **목적:** 코드 통합(catkin build) 이후, **실제 MORAI 시뮬**에서 담당 파트별로 확인할 항목을 기록합니다.  
 > **원칙:** 통합 PR은 build green으로 merge 가능. 아래 항목은 **merge 후·대회 전** 팀원이 로컬에서 수행하고 결과를 PR 코멘트·노션·이슈에 남깁니다.
 
-**최종 수정:** 2026-07-07
+**최종 수정:** 2026-07-08
 
 ---
 
@@ -30,18 +30,21 @@ cd /root/ws && source devel/setup.bash
 
 ---
 
-## 1. Planning (MPC + Frenet planner)
+## 1. Planning (behavior_planner + Frenet + MPC)
 
 | # | 확인 | 담당 | 통과 기준 |
 |---|------|------|-----------|
-| 1.1 | integration launch | 정윤태·이강태 | `roslaunch integration_launch integration.launch` 기동 |
-| 1.2 | waypoint 로드 | 정윤태 | launch 로그에 `path.txt` 오픈 성공 |
-| 1.3 | `/Ego_topic` 구독 | 정윤태 | planner·mpc 노드가 ego pose 수신 |
-| 1.4 | trajectory publish | 이강태 | `/frenet_planner/trajectory` publish |
-| 1.5 | MPC tracking | 정윤태·양서준 | `/ctrl_cmd` 또는 MORAI 제어 토픽으로 차량 이동 |
-| 1.6 | fallback CSV | 정윤태 | planner 미연결 시 mpc CSV waypoint fallback |
+| 1.1 | integration launch | 정윤태·이강태 | `roslaunch integration_launch integration.launch` — 3노드 기동 |
+| 1.2 | waypoint 로드 | 정윤태 | launch 로그에 `path_route1.txt` 오픈 성공 |
+| 1.3 | `/Ego_topic` 구독 | 정윤태 | behavior·planner·mpc 노드가 ego pose 수신 |
+| 1.4 | behavior context | 정윤태 | `/behavior/context` publish, `rostopic echo` 1회 |
+| 1.5 | plan feedback | 이강태 | `/planner/plan_feedback` publish |
+| 1.6 | trajectory publish | 이강태 | `/frenet_planner/trajectory` publish |
+| 1.7 | MPC tracking | 정윤태·양서준 | `/ctrl_cmd` 또는 MORAI 제어 토픽으로 차량 이동 |
+| 1.8 | trajectory vs CSV | 정윤태 | planner 켜짐 → external trajectory 사용 로그; planner 끔 → CSV fallback |
+| 1.9 | 저속·곡률 (v2 bugfix) | 정윤태 | 급커브·저속 구간에서 이탈·진동 없음 (`72e2a37` 검증 항목) |
 
-**비고:** UDP 전환은 `feature/yuntae-*` 별도 검증.
+**비고:** UDP 전환은 `feature/yuntae-*` 별도 검증. behavior dashboard는 `http://localhost:8088` (선택).
 
 ---
 

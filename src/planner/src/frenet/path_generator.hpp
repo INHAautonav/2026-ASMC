@@ -1,7 +1,6 @@
 #ifndef FRENET_PATH_GENERATOR_HPP
 #define FRENET_PATH_GENERATOR_HPP
 
-#include "frenet/frenet_types.hpp"
 #include "frenet/ref_line.hpp"
 #include "global/global.hpp"
 
@@ -172,6 +171,7 @@ std::vector<FrenetPath> ResolveManeuver(const FrenetState& start,
                                          const PlannerCommand& cmd,
                                          const RefLine& ref,
                                          const PathGeneratorConfig& cfg,
-                                         const KinematicLimits& limits);
+                                         const KinematicLimits& limits,
+                                         double lane_width);
 
 #endif
