@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  catkin-build:
+    runs-on: ubuntu-22.04
+    container: ros:noetic
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build deps
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends libyaml-cpp-dev
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Verify morai_msgs submodule
+        run: |
+          test -d src/MORAI-ROS_morai_msgs/.git || test -f src/MORAI-ROS_morai_msgs/package.xml
+          echo "morai_msgs present"
+
+      - name: catkin_make
+        run: |
+          source /opt/ros/noetic/setup.bash
+          ./scripts/build_ws.sh

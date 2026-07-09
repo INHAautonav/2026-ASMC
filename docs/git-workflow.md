@@ -1,5 +1,8 @@
 # Git 브랜치·PR 워크플로
 
+> **팀원 필독 (통합본):** [collaboration.md](./collaboration.md)  
+> PR 체크리스트: [.github/pull_request_template.md](../.github/pull_request_template.md)
+
 ## 1. 기본 원칙
 
 | 원칙 | 설명 |
@@ -50,6 +53,15 @@ EOF
 )"
 ```
 
+### merge 후 로컬 정리
+
+```bash
+git checkout main
+git pull origin main
+git branch -d feature/seunghyun-lbc-train
+git submodule update --init --recursive
+```
+
 ## 4. 커밋 메시지
 
 ```
@@ -76,7 +88,13 @@ refactor(planner): 리팩터 (동작 변경 없음)
 - submodule·Docker·공용 docs
 - τ·BEV (`interfaces`) 합의 주관
 
-## 7. GitHub
+## 7. GitHub · 자동화
 
-- 조직: [INHAautonav](https://github.com/INHAautonav)
-- Repo: [2026-ASMC](https://github.com/INHAautonav/2026-ASMC)
+| 항목 | 위치 |
+|------|------|
+| 조직 | [INHAautonav](https://github.com/INHAautonav) |
+| Repo | [2026-ASMC](https://github.com/INHAautonav/2026-ASMC) |
+| CODEOWNERS | [.github/CODEOWNERS](../.github/CODEOWNERS) |
+| CI | [.github/workflows/ci.yml](../.github/workflows/ci.yml) — PR·main push 시 `catkin_make` |
+
+충돌·rebase: [collaboration.md §4](./collaboration.md#4-충돌리베이스)

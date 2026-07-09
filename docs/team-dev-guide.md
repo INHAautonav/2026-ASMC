@@ -4,7 +4,7 @@
 > **대상:** 팀원 전원 (통합 코드 이식 완료 후)  
 > **원칙:** 새 작업은 **항상 `2026-ASMC` `main`에서 `feature/<이름>-…` 브랜치**로 한다. 개인 GitHub(`aim_ws`, `mpc_ws` 등)에는 **새 기능을 올리지 않는다.**
 
-관련: [sim-verification-checklist.md](./sim-verification-checklist.md) · [repository-layout.md](./repository-layout.md) · [git-workflow.md](./git-workflow.md) · [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
+관련: [collaboration.md](./collaboration.md) · [sim-verification-checklist.md](./sim-verification-checklist.md) · [repository-layout.md](./repository-layout.md) · [git-workflow.md](./git-workflow.md) · [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
 
 ---
 

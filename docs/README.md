@@ -7,18 +7,19 @@
 ## 읽는 순서
 
 1. [getting-started.md](./getting-started.md) — 클론·첫 실행
-2. [team-dev-guide.md](./team-dev-guide.md) — **팀원별 개발 경로·검증·주의사항**
-3. [competition-environment.md](./competition-environment.md) — **대회 PC·센서·네트워크 규정**
-4. [development-environment.md](./development-environment.md) — OS, Python, ROS, Docker 표준
-5. [architecture-overview.md](./architecture-overview.md) — 팀 아키텍처·모듈·인터페이스
-6. [git-workflow.md](./git-workflow.md) — 브랜치·PR·커밋 규칙
-7. [repository-layout.md](./repository-layout.md) — 폴더·파트 격리
-8. [docker-guide.md](./docker-guide.md) — 컨테이너 빌드·재생성
-9. [integration-plan.md](./integration-plan.md) — 통합 진행 상황
-10. [planning-behavior-handoff.md](./planning-behavior-handoff.md) — behavior↔planner↔mpc 연동 규약
-11. [sim-verification-checklist.md](./sim-verification-checklist.md) — **MORAI 시뮬 검증 (담당별)**
-12. [morai-msgs-versions.md](./morai-msgs-versions.md) — 레포별 morai_msgs 버전
-13. [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) — **beta_drive 정렬 규약 (통합·일상 작업)**
+2. [collaboration.md](./collaboration.md) — **★ 브랜치·PR·충돌 방지 (팀원 필독)**
+3. [team-dev-guide.md](./team-dev-guide.md) — **팀원별 개발 경로·검증·주의사항**
+4. [competition-environment.md](./competition-environment.md) — **대회 PC·센서·네트워크 규정**
+5. [development-environment.md](./development-environment.md) — OS, Python, ROS, Docker 표준
+6. [architecture-overview.md](./architecture-overview.md) — 팀 아키텍처·모듈·인터페이스
+7. [git-workflow.md](./git-workflow.md) — 브랜치·PR·커밋 규칙 (상세)
+8. [repository-layout.md](./repository-layout.md) — 폴더·파트 격리
+9. [docker-guide.md](./docker-guide.md) — 컨테이너 빌드·재생성
+10. [integration-plan.md](./integration-plan.md) — 통합 진행 상황
+11. [planning-behavior-handoff.md](./planning-behavior-handoff.md) — behavior↔planner↔mpc 연동 규약
+12. [sim-verification-checklist.md](./sim-verification-checklist.md) — **MORAI 시뮬 검증 (담당별)**
+13. [morai-msgs-versions.md](./morai-msgs-versions.md) — 레포별 morai_msgs 버전
+14. [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) — **beta_drive 정렬 규약 (통합·일상 작업)**
 
 ## 본 repo에 포함되는 것
 
