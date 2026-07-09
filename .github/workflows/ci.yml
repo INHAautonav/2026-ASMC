@@ -18,7 +18,9 @@ jobs:
       - name: Install git and build deps
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends git ca-certificates libyaml-cpp-dev
+          apt-get install -y --no-install-recommends \
+            git ca-certificates libyaml-cpp-dev \
+            ros-noetic-tf ros-noetic-tf2-ros
           rm -rf /var/lib/apt/lists/*
 
       - uses: actions/checkout@v4
