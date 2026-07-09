@@ -88,13 +88,19 @@ ROS 패키지는 **`src/<패키지명>/`** 바로 아래. 논리 그룹은 `src/
 
 CODEOWNERS 자동 리뷰: [.github/CODEOWNERS](../.github/CODEOWNERS)
 
-## 4. 외부 참조 (본 repo 밖)
+## 4. 레거시 upstream (본 repo 밖)
 
-| 종류 | 규칙 |
-|------|------|
-| `external/team/` | 팀원 upstream clone — **읽기 전용** diff (로컬 작업 루트 전용, 본 repo 미포함) |
-| `external/baselines/` | 논문 코드 — **ASMC 복사 금지** |
-| `external/morai/` | MORAI 예제 |
+본 repo에 포함되지 않습니다. diff·이력 확인이 필요할 때 **각자 원하는 경로에 clone**합니다.
+
+| 종류 | GitHub | 용도 |
+|------|--------|------|
+| planning (구 `mpc_ws`) | [yuntae12-sudo/mpc_ws](https://github.com/yuntae12-sudo/mpc_ws) | 이식 전 참조 |
+| learning·scenario (구 `aim_ws`) | [kante2/aim_ws](https://github.com/kante2/aim_ws) | 브랜치별 레거시 |
+| perception | [sonshiny/morai-3d-detection](https://github.com/sonshiny/morai-3d-detection) | 이식 전 참조 |
+| morai_msgs (26.R1) | [MORAI-ROS_morai_msgs](https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs) `26.R1` | beta diff 참고 |
+
+**금지:** 외부 베이스라인·레거시 코드를 **본 repo에 통째 복사** (이식 PR로만 반영).  
+매핑 상세: [integration-plan.md](./integration-plan.md)
 
 ## 5. 아키텍처 → 경로
 

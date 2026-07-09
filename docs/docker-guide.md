@@ -106,6 +106,6 @@ Docker Desktop → WSL Integration 활성화, NVIDIA Container Toolkit 확인.
 | Docker Desktop + WSL | 컨테이너 IP ≠ `127.0.0.1` — WSL에서 `hostname -I` 첫 주소를 MORAI Bridge 설정에 입력 |
 | 연결 확인 | `rostopic list` / bridge 기동 후 9090 리슨 확인 |
 
-레거시 참고: `external/team/aim_ws-va_seunghyun/show_morai_bridge_ip.sh`, `morai_bridge.env`
+Bridge 설정: `config/morai_bridge.env`, 실행 `./scripts/bridge.sh`
 
 **주의:** `aim-noetic-pc`와 `asmc-ros-noetic` **동시 실행 금지** (ROS master 11311 충돌).

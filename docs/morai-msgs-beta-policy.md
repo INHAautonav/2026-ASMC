@@ -22,18 +22,18 @@
 | **upstream** | https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs |
 | **금지** | 패키지 안·워크스페이스 안 `morai_msgs` 복사본, symlink를 submodule 대신 영구 사용 |
 
-### 로컬 참조용 clone (ASMC 밖, git 미포함)
+### 참조용 clone (ASMC 밖, git 미포함)
 
-| 경로 | 브랜치 | 용도 |
-|------|--------|------|
-| `external/morai/MORAI-ROS_morai_msgs-beta_drive` | `beta_drive` | **대회 기준** — diff·검증의 정본 |
-| `external/morai/MORAI-ROS_morai_msgs` | `26.R1` | **시뮬 26.R1 h3 참조** — beta와 diff 비교용 |
+필요 시 [MORAI-ROS_morai_msgs](https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs)를 **원하는 경로에** 두 브랜치를 각각 clone합니다.
+
+| 브랜치 | 용도 |
+|--------|------|
+| `beta_drive` | **대회 기준** — diff·검증의 정본 |
+| `26.R1` | **시뮬 26.R1 h3 참조** — beta와 diff 비교용 |
 
 ```bash
-# 두 버전 diff (로컬)
-diff -ru \
-  external/morai/MORAI-ROS_morai_msgs/msg \
-  external/morai/MORAI-ROS_morai_msgs-beta_drive/msg
+# 예: 두 clone 경로에서 msg diff
+diff -ru <26.R1-clone>/msg <beta_drive-clone>/msg
 ```
 
 ---
@@ -132,7 +132,7 @@ git submodule update --init --recursive
 |------|------|
 | MORAI SIM 실행 파일 | 26.R1 h2~h3 (팀원 PC) |
 | ROS msg 정의 (빌드) | **`beta_drive` only** |
-| 로컬 diff 참고 | `external/morai/MORAI-ROS_morai_msgs` (`26.R1`) |
+| 로컬 diff 참고 | upstream `26.R1` 브랜치 clone |
 
 시뮬이 26.R1이어도, **대회와 동일한 msg로 빌드**하면 당일 PC와 정합성이 높아진다.  
 필드 불일치로 런타임 오류가 나면 **코드를 beta에 맞추고**, msg를 26.R1로 내리지 않는다.

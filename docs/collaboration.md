@@ -50,7 +50,7 @@ main (안정)
 ### 1.2 표준 개발 절차
 
 ```bash
-cd "$ASMC"   # 예: ~/projects/2026-ai-sw-mobility-competition/2026-ASMC
+cd <clone한-2026-ASMC-경로>   # 선택: export ASMC=... 후 cd "$ASMC"
 
 git checkout main && git pull
 git submodule update --init --recursive

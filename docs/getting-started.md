@@ -20,18 +20,18 @@
 | clone 위치 | **WSL 홈** (`~/...`) 어디든 가능. `/mnt/c/...` **금지** — [getting-started.md §2](./getting-started.md) |
 | 맵 데이터 | repo 밖 `$ASMC_DATA`. 탐색기 `\\wsl.localhost\<배포판>\home\<user>\asmc-data` 로 복사 가능 |
 | MORAI SIM | **Windows에서 실행**. 최초 실행 시 방화벽 **개인·공용 네트워크 허용** |
-| IDE | Cursor **WSL Remote** (`~/projects`) 또는 `docker exec -it asmc-ros-noetic bash` |
+| IDE | WSL Remote 지원 에디터 또는 `docker exec -it asmc-ros-noetic bash` |
 
 ```bash
-# Git 인증 (Windows Credential Manager, 선택)
-git -c credential.helper='!"/mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe"' clone ...
+# Git 인증 (Windows + WSL, 선택) — 본인 환경의 credential helper 사용
+git clone --recurse-submodules https://github.com/INHAautonav/2026-ASMC.git
 ```
 
 셸 변수 (`~/.bashrc`, **선택** — 편하면 설정):
 
 ```bash
-export ASMC="$HOME/projects/2026-ASMC"   # 본인이 clone한 경로
-export ASMC_DATA="$HOME/asmc-data"       # 맵·대용량 데이터
+export ASMC="<clone한-2026-ASMC-경로>"
+export ASMC_DATA="<맵·대용량-데이터-경로>"
 ```
 
 `ASMC`를 설정하지 않아도, **repo 루트에서** `./scripts/...` 를 실행하면 스크립트가 경로를 자동으로 찾습니다.  
@@ -58,11 +58,11 @@ cd "$ASMC"
 git checkout main && git pull
 ```
 
-경로를 정하지 않고 clone하는 경우 (예: `~/workspaces/Repositories/2026-ASMC`):
+경로를 정하지 않고 clone하는 경우:
 
 ```bash
-git clone --recurse-submodules https://github.com/INHAautonav/2026-ASMC.git ~/workspaces/Repositories/2026-ASMC
-cd ~/workspaces/Repositories/2026-ASMC
+git clone --recurse-submodules https://github.com/INHAautonav/2026-ASMC.git <원하는-경로>
+cd <원하는-경로>
 git checkout main && git pull
 ```
 

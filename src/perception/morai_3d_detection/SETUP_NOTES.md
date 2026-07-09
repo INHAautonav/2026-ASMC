@@ -22,7 +22,7 @@
 3. ROS Noetic 설치
 4. `pip install -r requirements.txt` (아래 참고)
 
-**requirements.txt**: `~/backup_env/requirements.txt`에 `pip freeze`로 생성됨 (torch==2.1.0+cu121 포함, 전체 패키지 버전 고정). 코드와 함께 GitHub에 커밋할 것.
+**requirements.txt**: repo 루트의 `requirements.txt`를 Git에 포함해 버전을 고정합니다.
 
 > 참고: `pip install --break-system-packages` 필요 여부는 새 머신의 Python 관리 방식(system Python vs venv)에 따라 다를 수 있음 — 설치 시 확인.
 
@@ -54,7 +54,7 @@
 
 ## 4. 모델 가중치(.pth) 백업 상태
 
-**보관 위치:** `Y:\AIM_2026\개인 폴더\손재호` (NAS 네트워크 드라이브)
+**보관 위치:** 팀 NAS (경로는 담당자 @sonshiny 와 합의)
 
 **백업 완료 (2026-07-02, sha256 대조 검증됨):** 13개 파일 전부 무결성 확인 완료.
 

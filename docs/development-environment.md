@@ -81,7 +81,7 @@
 - **버전 매핑:** [morai-msgs-versions.md](./morai-msgs-versions.md)
 - **통합·일상 작업 규약:** [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md) ← **필독**
 
-현재 로컬: `src/MORAI-ROS_morai_msgs` → `beta_drive` @ `45c6baf` (symlink, 통합 PR 전 임시)
+현재 ASMC: `src/MORAI-ROS_morai_msgs` submodule @ **`beta_drive`** (`45c6baf`)
 
 ## 5. 데이터·맵
 

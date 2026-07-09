@@ -7,10 +7,10 @@
 
 1. **환경·규약·Docker** 통일 (본 문서 시점)
 2. **폴더 격리** 후 모듈별 `integrate/*` PR
-3. 레거시 분산 repo는 **읽기 전용** 참조 (`external/team/`) — 통합 후에도 diff용
+3. 레거시 **GitHub upstream**은 읽기 전용 참조 — 통합 후에도 diff용 (본 repo 미포함)
 
 **하지 않는 것**
-- `external/baselines` ASMC 복사
+- 외부 베이스라인·논문 코드를 ASMC에 복사
 - aim_ws 3브랜치 통째 merge
 - `main`에 개인별 전체 복사본
 - **26.R1 필드명 그대로 merge** — 이식 PR마다 [beta 정렬](./morai-msgs-beta-policy.md) 선행
@@ -31,20 +31,21 @@
 | — | morai-3d-detection 시나리오 ROS 연동 (`adb1056`) | ⬜ **추후** — scenario runner `/dataset_control` publisher 선행 필요 |
 | — | ochang `gps_logger` | ❌ **미사용** — 이식하지 않음 |
 
-## 3. external/team 동기화 (2026-07-08 pull)
+## 3. 레거시 upstream 동기화 (2026-07-08 기준)
 
-| 로컬 clone | Upstream HEAD | 통합 이후 신규 | ASMC 반영 |
-|------------|---------------|----------------|-----------|
-| `mpc_ws` | `72e2a37` (07-08) | **3커밋** — behavior_planner, bridge, 주행 버그픽스 | ✅ PR #4 |
-| `morai-3d-detection` | `adb1056` (07-08) | **1커밋** — `/dataset_control` ROS 연동 | ⬜ defer (반쪽 연동) |
-| `aim_ws-va_seunghyun` | `1ae08b7` (07-05) | 없음 | ✅ 동기화 |
-| `aim_ws-jang` | `e6b282e` (07-06) | 없음 | ✅ 동기화 |
-| `aim_ws-ochang` | `2b6eb4b` (06-23) | 없음 | ❌ skip (`gps_logger` 미사용) |
+아래는 **GitHub upstream HEAD**입니다. 필요 시 각자 clone한 경로에서 `git pull`합니다.
+
+| upstream | 브랜치 | HEAD | 통합 이후 신규 | ASMC 반영 |
+|----------|--------|------|----------------|-----------|
+| [yuntae12-sudo/mpc_ws](https://github.com/yuntae12-sudo/mpc_ws) | `main` | `72e2a37` (07-08) | **3커밋** — behavior_planner, bridge, 주행 버그픽스 | ✅ PR #4 |
+| [sonshiny/morai-3d-detection](https://github.com/sonshiny/morai-3d-detection) | `main` | `adb1056` (07-08) | **1커밋** — `/dataset_control` ROS 연동 | ⬜ defer |
+| [kante2/aim_ws](https://github.com/kante2/aim_ws) | `va_seunghyun` | `1ae08b7` (07-05) | 없음 | ✅ 동기화 |
+| [kante2/aim_ws](https://github.com/kante2/aim_ws) | `jang` | `e6b282e` (07-06) | 없음 | ✅ 동기화 |
+| [kante2/aim_ws](https://github.com/kante2/aim_ws) | `ochang` | `2b6eb4b` (06-23) | 없음 | ❌ skip (`gps_logger` 미사용) |
 
 ```bash
-cd external/team/mpc_ws && git pull origin main
-cd external/team/morai-3d-detection && git pull origin main
-# aim_ws 브랜치별: git pull origin <branch>
+# 예: mpc_ws를 별도 clone해 두었다면
+cd <mpc_ws-clone> && git pull origin main
 ```
 
 ## 4. 레거시 → ASMC 매핑
@@ -122,7 +123,7 @@ KATRI 확장 맵 레이어를 K-city 2025로 제공받을 수 있는지 **MORAI 
 | **4** | `integrate/interfaces` | τ·BEV·토픽명 합의 | ⬜ |
 | **5** | 팀별 `feature/*` | planning UDP, perception 추론 노드 등 | ASMC 위에서 개발 |
 
-**이식하지 않음:** `ochang` 브랜치 통째(·`gps_logger` 포함), `aim_ws/src/main` 레거시, `external/baselines` 복사, jang `lbc_bev_visualizer` gRPC 경로(추후 판단).
+**이식하지 않음:** `ochang` 브랜치 통째(·`gps_logger` 포함), `aim_ws/src/main` 레거시, 외부 베이스라인 복사, jang `lbc_bev_visualizer` gRPC 경로(추후 판단).
 
 ## 11. 다음 작업 (통합 리드)
 
