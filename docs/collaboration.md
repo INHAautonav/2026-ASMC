@@ -162,7 +162,7 @@ docker exec -it asmc-ros-noetic bash -c './scripts/build_ws.sh'
 ```
 
 MORAI 시뮬 상세: [sim-verification-checklist.md](./sim-verification-checklist.md)  
-셸 변수·로컬 루트: 개인 `~/projects/DEV-ENVIRONMENT.md` (선택)
+클론·셸 변수·Docker: [getting-started.md](./getting-started.md), [development-environment.md](./development-environment.md)
 
 ---
 
