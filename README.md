@@ -31,9 +31,8 @@
 ## 빠른 시작
 
 ```bash
-export ASMC="$HOME/projects/2026-ASMC"
-git clone --recurse-submodules https://github.com/INHAautonav/2026-ASMC.git "$ASMC"
-cd "$ASMC"
+git clone --recurse-submodules https://github.com/INHAautonav/2026-ASMC.git
+cd 2026-ASMC
 git checkout main && git pull
 git submodule update --init --recursive
 
@@ -42,6 +41,8 @@ xhost +local:docker
 ./scripts/docker_ros_up.sh up
 docker exec -it asmc-ros-noetic bash -c './scripts/build_ws.sh'
 ```
+
+상세: [docs/getting-started.md](docs/getting-started.md)
 
 ## 저장소 구조 (요약)
 
@@ -75,5 +76,5 @@ docker exec -it asmc-ros-noetic bash -c './scripts/build_ws.sh'
 
 ## 레거시 코드
 
-분산 개발본(`external/team/` 등)은 **읽기 전용 참조**. 새 작업은 **본 repo**에서만.  
-매핑: [docs/integration-plan.md](docs/integration-plan.md)
+통합 이전 **분산 GitHub repo**는 읽기 전용 참조용입니다. 새 작업은 **본 repo**에서만 합니다.  
+upstream 매핑: [docs/integration-plan.md](docs/integration-plan.md) §4

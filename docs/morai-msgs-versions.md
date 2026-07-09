@@ -73,18 +73,19 @@
 | **`aim_ws` `jang`** | 장원태 | **`26.R1` 브랜치 100%** (91 msg, 0 diff) | 26.r1.h3 | ✅ **26.R1 = h3 sim msg 라인** |
 | **`aim_ws` `ochang`** | 이강태 | va와 유사 stripped, beta와 3개 diff | 대회 무관 | ⚠️ 구버전·통합 제외 |
 | **`morai-3d-detection`** | 손재호 | msg 폴더 비어 있음. `morai_3d_live.py`만 `EgoVehicleStatus` 등 import | h2~h3 | △ **오프라인 데이터** 위주 — msg 빌드 의존 낮음. live는 `26.R1` 필드명 가정 가능 |
-| **`2026-ASMC`** (현재) | 통합 | **`beta_drive` @ `45c6baf`** (로컬 symlink → `external/morai/...-beta_drive`) | — | 통합 시 submodule `beta_drive`로 전환 예정 |
+| **`2026-ASMC`** (현재) | 통합 | **`beta_drive` @ `45c6baf`** (submodule) | — | ✅ 통합 완료 |
 
-### `external/morai/` 로컬 clone (참조·diff용)
+### 참조용 clone (ASMC 밖)
 
-| 폴더 | 브랜치 | 커밋 | 용도 |
-|------|--------|------|------|
-| `MORAI-ROS_morai_msgs-beta_drive` | `beta_drive` | `45c6baf` | **대회 기준** — ASMC 빌드·당일 PC |
-| `MORAI-ROS_morai_msgs` | **`26.R1`** | `4c9be6f` | **시뮬 26.R1 h3 참조** — beta와 diff 비교 |
+[MORAI-ROS_morai_msgs](https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs)를 원하는 경로에 브랜치별로 clone합니다.
+
+| 브랜치 | 커밋 | 용도 |
+|--------|------|------|
+| `beta_drive` | `45c6baf` | **대회 기준** — ASMC 빌드·당일 PC |
+| `26.R1` | `4c9be6f` | **시뮬 26.R1 h3 참조** — beta와 diff 비교 |
 
 ```bash
-diff -ru external/morai/MORAI-ROS_morai_msgs/msg \
-         external/morai/MORAI-ROS_morai_msgs-beta_drive/msg
+diff -ru <26.R1-clone>/msg <beta_drive-clone>/msg
 ```
 
 **정렬 규약 (통합 후 필수):** [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
@@ -96,7 +97,7 @@ diff -ru external/morai/MORAI-ROS_morai_msgs/msg \
 요약:
 - ASMC catkin·대회 = **`beta_drive` submodule 단일**
 - 레거시(26.R1 필드) 이식 PR = **merge 전 beta 필드로 수정**
-- 로컬 `external/morai/MORAI-ROS_morai_msgs` (`26.R1`)는 **diff 참고용만**
+- upstream `26.R1` 브랜치 clone은 **diff 참고용만**
 
 ### morai-3d-detection
 
@@ -110,4 +111,4 @@ diff -ru external/morai/MORAI-ROS_morai_msgs/msg \
 | **대회·ASMC submodule** | `beta_drive` |
 | **26.R1 h3 시뮬 일상 개발** | sim은 h3, **코드는 beta 필드로 맞추는 중** |
 | **신호등 BEV / Expert** | msg는 양쪽 다 있음. 런타임 토픽은 **맵별 검증** + `MoraiEventCmd` |
-| **레거시 참고만** | `external/morai/MORAI-ROS_morai_msgs` (26.R1), `ochang` 브랜치 |
+| **레거시 참고만** | upstream `26.R1` clone, `ochang` 브랜치 |

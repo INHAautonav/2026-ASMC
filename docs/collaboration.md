@@ -50,7 +50,7 @@ main (안정)
 ### 1.2 표준 개발 절차
 
 ```bash
-cd "$ASMC"   # 예: ~/projects/2026-ai-sw-mobility-competition/2026-ASMC
+cd <clone한-2026-ASMC-경로>   # 선택: export ASMC=... 후 cd "$ASMC"
 
 git checkout main && git pull
 git submodule update --init --recursive
@@ -162,7 +162,7 @@ docker exec -it asmc-ros-noetic bash -c './scripts/build_ws.sh'
 ```
 
 MORAI 시뮬 상세: [sim-verification-checklist.md](./sim-verification-checklist.md)  
-셸 변수·로컬 루트: 개인 `~/projects/DEV-ENVIRONMENT.md` (선택)
+클론·셸 변수·Docker: [getting-started.md](./getting-started.md), [development-environment.md](./development-environment.md)
 
 ---
 
