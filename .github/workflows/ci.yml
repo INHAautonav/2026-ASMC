@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  catkin-build:
+    runs-on: ubuntu-22.04
+    container: ros:noetic
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # ros:noetic 이미지에 git이 없으면 checkout(submodules)이 REST fallback으로 실패함
+      - name: Install git and build deps
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates libyaml-cpp-dev \
+            ros-noetic-tf ros-noetic-tf2-ros
+          rm -rf /var/lib/apt/lists/*
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Verify morai_msgs submodule
+        run: |
+          test -d src/MORAI-ROS_morai_msgs/.git || test -f src/MORAI-ROS_morai_msgs/package.xml
+          echo "morai_msgs present"
+
+      - name: catkin_make
+        run: |
+          source /opt/ros/noetic/setup.bash
+          ./scripts/build_ws.sh

@@ -1,0 +1,33 @@
+# Default — integration lead reviews shared infrastructure
+/docker/                          @ahnsh03
+/scripts/build_ws.sh              @ahnsh03
+/scripts/docker_ros_up.sh         @ahnsh03
+/scripts/asmc_env.sh              @ahnsh03
+/src/integration_launch/          @ahnsh03 @yuntae12-sudo
+/src/interfaces/                  @ahnsh03
+/docs/                            @ahnsh03
+/.github/                         @ahnsh03
+
+# Planning — 정윤태 · 양서준
+/src/behavior_planner/            @yuntae12-sudo @yangseojun
+/src/mpc_controller/              @yuntae12-sudo @yangseojun
+
+# Frenet planner — 이강태
+/src/planner/                     @kante2 @yuntae12-sudo
+
+# Learning · bridge — 안승현
+/src/learning_by_cheating/        @ahnsh03
+/scripts/bridge.sh                @ahnsh03
+/scripts/diagnose_morai_bridge.sh @ahnsh03
+/config/                          @ahnsh03
+/mgeo_toolkit/                    @ahnsh03
+
+# Perception — 손재호
+/src/perception/                  @sonshiny
+
+# Scenario · gRPC — 장원태
+/tools/aim_scenario_runner/       @wkddnjsxo
+/tools/grpc_inha_univ/            @wkddnjsxo
+
+# Submodule — integration lead only
+/src/MORAI-ROS_morai_msgs/        @ahnsh03

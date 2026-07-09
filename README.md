@@ -13,6 +13,7 @@
 
 | 문서 | 내용 |
 |------|------|
+| [docs/collaboration.md](docs/collaboration.md) | **★ 브랜치·PR·충돌 방지 (팀원 필독)** |
 | [docs/getting-started.md](docs/getting-started.md) | 클론·첫 빌드 |
 | [docs/team-dev-guide.md](docs/team-dev-guide.md) | **팀원별 개발 경로·검증·주의사항** |
 | [docs/sim-verification-checklist.md](docs/sim-verification-checklist.md) | MORAI 시뮬 검증 (담당별) |

@@ -2,6 +2,7 @@
 
 ## 빠른 링크
 
+- [docs/collaboration.md](docs/collaboration.md) ← **★ 브랜치·PR·충돌 방지**
 - [docs/getting-started.md](docs/getting-started.md)
 - [docs/team-dev-guide.md](docs/team-dev-guide.md) ← **팀원별 개발·검증**
 - [docs/git-workflow.md](docs/git-workflow.md)
@@ -29,15 +30,19 @@
 - [ ] 절대경로(`/home/…`) 없음
 - [ ] 커밋 메시지 `feat(scope): …`
 - [ ] breaking change 시 `src/interfaces/`·팀 공지
+- [ ] [.github/pull_request_template.md](.github/pull_request_template.md) 작성
 
 ## 리뷰어
 
-| 파트 | 기본 리뷰어 |
-|------|-------------|
-| planning (`behavior_planner`, `planner`, `mpc_controller`) | 정윤태 |
-| perception (`morai_3d_detection`) | 손재호 |
-| scenario / gRPC (`tools/`) | 장원태 |
-| learning·bridge·docs·docker | 안승현 |
+| 파트 | 기본 리뷰어 | GitHub |
+|------|-------------|--------|
+| planning (`behavior_planner`, `mpc_controller`, `integration_launch`) | 정윤태 · 양서준 | @yuntae12-sudo · @yangseojun |
+| Frenet (`planner`) | 이강태 · 정윤태 | @kante2 · @yuntae12-sudo |
+| perception (`morai_3d_detection`) | 손재호 | @sonshiny |
+| scenario / gRPC (`tools/`) | 장원태 | @wkddnjsxo |
+| learning·bridge·docs·docker | 안승현 | @ahnsh03 |
+
+전체 계정표: [docs/collaboration.md §0](docs/collaboration.md#0-팀-github-계정)
 
 ## 통합 문의
 
