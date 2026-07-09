@@ -6,6 +6,22 @@
 
 ---
 
+## 0. 팀 GitHub 계정
+
+| GitHub | 이름 | 담당 |
+|--------|------|------|
+| [@ahnsh03](https://github.com/ahnsh03) | 안승현 | 통합 리드 · LBC · bridge · Docker · docs |
+| [@yuntae12-sudo](https://github.com/yuntae12-sudo) | 정윤태 | planning lead · behavior · MPC · launch |
+| [@yangseojun](https://github.com/yangseojun) | 양서준 | MPC · behavior 공조 |
+| [@kante2](https://github.com/kante2) | 이강태 | Frenet planner |
+| [@wkddnjsxo](https://github.com/wkddnjsxo) | 장원태 | scenario runner · gRPC |
+| [@sonshiny](https://github.com/sonshiny) | 손재호 | 3D perception |
+
+> 레거시 `kante2/aim_ws` 브랜치명(`jang`, `ochang`, `va_seunghyun`)은 **과거 작업 분기**일 뿐 GitHub 계정과 1:1이 아닙니다.  
+> 예: `jang` 브랜치 = 장원태(`wkddnjsxo`) 시나리오 작업, `ochang` = 이강태(`kante2`) 구버전(미이식).
+
+---
+
 ## 1. 팀 Git 규약 (필수)
 
 ### 1.1 기본 원칙
@@ -181,8 +197,8 @@ git push --force-with-lease
 
 ## 6. CODEOWNERS · CI
 
-- **CODEOWNERS**: [.github/CODEOWNERS](../.github/CODEOWNERS) — GitHub username은 팀원 확인 후 갱신
-- **CI**: PR·`main` push 시 `catkin_make` (`/.github/workflows/ci.yml`)
+- **CODEOWNERS**: [.github/CODEOWNERS](../.github/CODEOWNERS) — §0 계정 기준 자동 리뷰 요청
+- **CI**: PR·`main` push 시 Docker(`ros:noetic`)에서 submodule 포함 `catkin_make` ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml))
 
 ---
 

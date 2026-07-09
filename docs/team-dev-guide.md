@@ -6,6 +6,17 @@
 
 관련: [collaboration.md](./collaboration.md) · [sim-verification-checklist.md](./sim-verification-checklist.md) · [repository-layout.md](./repository-layout.md) · [git-workflow.md](./git-workflow.md) · [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
 
+### GitHub 계정 (PR·CODEOWNERS)
+
+| GitHub | 이름 | § |
+|--------|------|---|
+| @ahnsh03 | 안승현 | §4 |
+| @yuntae12-sudo | 정윤태 | §1 |
+| @yangseojun | 양서준 | §2 |
+| @kante2 | 이강태 | §3 |
+| @wkddnjsxo | 장원태 | §5 |
+| @sonshiny | 손재호 | §6 |
+
 ---
 
 ## 0. 공통 (전원)

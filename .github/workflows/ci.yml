@@ -14,15 +14,16 @@ jobs:
       run:
         shell: bash
     steps:
+      # ros:noetic 이미지에 git이 없으면 checkout(submodules)이 REST fallback으로 실패함
+      - name: Install git and build deps
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates libyaml-cpp-dev
+          rm -rf /var/lib/apt/lists/*
+
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Install build deps
-        run: |
-          apt-get update
-          apt-get install -y --no-install-recommends libyaml-cpp-dev
-          rm -rf /var/lib/apt/lists/*
 
       - name: Verify morai_msgs submodule
         run: |

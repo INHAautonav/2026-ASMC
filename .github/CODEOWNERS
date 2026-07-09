@@ -8,12 +8,12 @@
 /docs/                            @ahnsh03
 /.github/                         @ahnsh03
 
-# Planning — 정윤태·양서준 (GitHub handle 확인 후 @ 추가)
-/src/behavior_planner/            @yuntae12-sudo
-/src/mpc_controller/              @yuntae12-sudo
+# Planning — 정윤태 · 양서준
+/src/behavior_planner/            @yuntae12-sudo @yangseojun
+/src/mpc_controller/              @yuntae12-sudo @yangseojun
 
-# Frenet planner — 이강태 (handle 확인 후 @ochang 등으로 변경)
-/src/planner/                     @yuntae12-sudo @ahnsh03
+# Frenet planner — 이강태
+/src/planner/                     @kante2 @yuntae12-sudo
 
 # Learning · bridge — 안승현
 /src/learning_by_cheating/        @ahnsh03
@@ -25,9 +25,9 @@
 # Perception — 손재호
 /src/perception/                  @sonshiny
 
-# Scenario · gRPC — 장원태 (handle 확인 후 업데이트)
-/tools/aim_scenario_runner/       @ahnsh03
-/tools/grpc_inha_univ/            @ahnsh03
+# Scenario · gRPC — 장원태
+/tools/aim_scenario_runner/       @wkddnjsxo
+/tools/grpc_inha_univ/            @wkddnjsxo
 
 # Submodule — integration lead only
 /src/MORAI-ROS_morai_msgs/        @ahnsh03
