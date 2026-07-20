@@ -1,152 +1,157 @@
-# 대회 환경·규정 (개발 필수)
+# 대회 환경·규정 (본선 v1.0)
 
-> 팀원 전원이 맞춰야 하는 **런타임·네트워크·당일 절차** 요약
+> **규정집 v1.0** (2026.07.11, 기술세미나 공개) · 팀원 전원 **필독**  
+> 본선 데이터: [competition-data.md](./competition-data.md)
 
 ## 1. 참가 PC 요건
 
 | 항목 | 요구사항 |
 |------|----------|
-| 형태 | **데스크톱 PC** (규정상 노트북 명시 없음 — 데스크톱만 허용) |
-| OS | **Ubuntu 20.04** |
-| ROS | **ROS1 Noetic** |
-| VM | VMware / VirtualBox **지원 불가** (로컬 OS 세팅) |
+| 형태 | **데스크톱 PC 및 노트북** |
+| OS | **자유** |
 | 지참 | 알고리즘 개발된 PC 직접 지참 |
 
-### WSL vs 네이티브 Ubuntu
+### 팀 개발 vs 대회
 
-WSL은 코드 편집·경량 작업에 유용하지만, **대회 당일 환경과 다릅니다.**
-
-| 항목 | 네이티브 Ubuntu 20.04 | WSL2 (개발용) |
-|------|------------------------|---------------|
-| 대회 운영 기준 정합성 | **높음** (규정 환경과 동일) | 낮음 |
-| 네트워크 / LAN 재현 | **직접 NIC 기반** | NAT·브리지 편차 가능 |
-| GPU·디스플레이 | **직접 제어** (HDMI 2포트 요구) | 호스트-게스트 이중 경로 |
-| ROS / UDP 지연 검증 | **직접 측정** | 계층 영향 가능 |
-| 당일 트러블슈팅 | 단일 환경 | WSL + Windows 동시 이슈 |
+| 구분 | 대회 당일 | 팀 일상 개발 |
+|------|-----------|--------------|
+| OS | **자유** | WSL2 + Docker **또는** Ubuntu 20.04 |
+| 통신 | **UDP only** (허용 외 실격) | UDP + ROS (내부 변환) |
+| Python | 팀 PC 기준 | **3.8** (Noetic·ML 공통) |
 
 **팀 정책**
-- **WSL + Docker:** 문서·코드 작성, catkin build, 경량 실험
-- **네이티브 Ubuntu 20.04:** ROS/UDP 통합, 판정 프로그램 연동, 최종 성능 측정
-- **8월 이전** 최소 1대를 "대회 리허설 PC"로 고정, 주 1회 이상 통합 리허설
+- **WSL + Docker:** 코드·catkin build
+- **네이티브 / 대회 PC:** UDP 통합, 판정 프로그램 연동, 최종 성능 측정
+- 9월 **현장 점검**에서 연습용 판정 프로그램 LAN 테스트
 
 ## 2. 대회 당일 제약
 
 | 규칙 | 내용 |
 |------|------|
-| 판정 프로그램 | **당일 제공** (사전에는 **연습용**만 제공) |
-| 주행 기회 | 미션별 **2회** (팀 수에 따라 변경 가능) |
-| PC 제출 후 | **코드·환경 수정 불가** (환경 세팅 예외) |
-| PC 지연 제출 | 미션별 **추가 감점 30점** |
-| 그래픽 | 외장 GPU에 **HDMI 출력 2포트** 필수 |
+| 판정 프로그램 | **당일 제공** (현장 점검 시 **연습용**) |
+| 주행 기회 | **2회** |
+| PC 제출 후 | **코드·파라미터·주석 수정 불가** |
+| PC 지연 제출 | **패널티 시간** (구체치 추후 공지) |
+| 모니터 | 주최 제공, **키보드·마우스** 지참 |
 
 ### 성능·지연
 
-- 대회 화면 송출로 인한 **성능 저하 감안**하여 개발
-- 센서/네트워크 **데이터 지연은 운영측에서 고려하지 않음** — **팀 책임**
-- 시뮬 전송 주기 ≈ ros_bridge 수신 주기 확인 **팀 책임**
+- 센서/네트워크 **지연은 운영측에서 고려하지 않음** — **팀 책임**
+- 판정: **Unity + UDP**
 
-## 3. 네트워크 토폴로지
+## 3. 본선 진행 환경
 
 ```
-[Server PC]  ←→  [스위칭 허브]  ←→  [Client PC]
-                      ↕
-               [참가팀 PC × N]
-        (이더넷 LAN to LAN)
+[Client PC] ←── 이더넷 (LAN to LAN) ──→ [참가팀 PC]
 ```
 
-| PC | 역할 |
-|----|------|
-| **Server PC** | 시뮬 멀티플레이, 동역학·제어 입력 처리 |
-| **Client PC** | 시뮬 구동, **판정 프로그램** 실행 |
-| **참가팀 PC** | 자율주행 알고리즘, **rosbridge (옵션)** |
+| PC | 사양/역할 |
+|----|-----------|
+| **Client PC** (주최) | i5-13600KF, RTX 4060 Ti, 32GB, Win11 — 시뮬 + **판정프로그램** |
+| **참가팀 PC** | 자율주행 알고리즘 |
 
-- 1~4번 팀: **멀티플레이** 환경
-- 세팅 완료 후 **동시 주행 시작**
-- 팀 간 **충돌 없음**, **동일 시나리오**, 타팀에 영향 없음
+- 조별 **5팀**, 각자 **싱글플레이** 독립 환경
+- **7개조** (당일 타임테이블은 로컬 `docs/competition/regulations/02-competition-environment.md` 참고)
+
+![본선 진행 환경](./competition/images/스크린샷%202026-07-10%20124338.png)
 
 ## 4. 차량·센서·맵
 
-### 차량 모델
-
-**2023_Hyundai_ioniq5**
+### 차량: 2023_Hyundai_ioniq5
 
 | 항목 | 값 |
 |------|-----|
-| Minimum Turning Radius | 5.87 m |
-| Maximum Wheel Angle | **40°** |
-| Wheelbase | **3.000 m** |
-| Length × Width × Height | 4.635 × 1.892 × 2.434 m |
+| Min Turning Radius | 5.87 m |
+| Max Wheel Angle | 40° |
+| Wheelbase | 3.000 m |
+| L × W × H | 4.635 × 1.892 × 2.434 m |
 
-### 사용 맵
-
-**R-KR_PG_K-City_2025** (레거시 KATRI 맵과 **다름** — 대회용 2025 버전 사용)
-
-### 허용 센서 (추론 시 이것만)
+### 센서 (본선 v1.0)
 
 | 센서 | 개수 | 비고 |
 |------|------|------|
-| GPS | 최대 1 | UDP or ROS |
-| IMU | 최대 1 | UDP or ROS |
-| 3D LiDAR | 최대 2 | **VLP16**, **HDL32** 만 |
-| Camera | 미션별 공지 | 해상도·FPS 자유 |
+| GPS | 1 | UDP, max 30 Hz |
+| IMU | 1 | UDP, max 50 Hz |
+| 3D LiDAR | 1 | **VLP16** only, max 15 Hz |
+| Camera | 4 | **고정 3 + 자유 1**, max 30 Hz, UDP |
 
-**실격:** 위 스펙 외 센서·네트워크 사용 시 실격 (규정 1.7.1 ⑧)
+#### 고정 카메라 3대 (변경 불가)
 
-### 제어·네트워크
+| | pos (m) | rot (deg) | 해상도 | FOV |
+|---|---------|-----------|--------|-----|
+| Front | 1.9, 0, 1.2 | 0, 2, 0 | 1280×720 | 90º |
+| Left | 1.15, 0.65, 1.2 | 0, 10, 70 | 640×480 | 130º |
+| Right | 1.15, −0.65, 1.2 | 0, 10, 290 | 640×480 | 130º |
+
+센서셋 JSON: [competition-data.md](./competition-data.md) — `2026_molit_comp_cam_set.json`
+
+### 맵
+
+**R-KR_PG_K-City_2025** · 시뮬 **25.S4.MolitComp03**
+
+### 제어·네트워크 (UDP)
 
 | 항목 | 값 |
 |------|-----|
-| 제어 | UDP `Ctrl_cmd`, longi type **1** (accel, brake) |
-| 통신 | **UDP or ROS** (규정 명시 외 프로토콜 금지) |
-| LiDAR ROS | **velodyne 드라이버** 필수 |
-| morai_msgs | 브랜치 **`beta_drive`** |
+| 제어 | `Ctrl_cmd`, longi type **1** (accel, brake) |
+| 상태 | CollisionData, Competition Vehicle Status |
+| **실격** | 허용 UDP 외 사용, 센서 스펙 위반 |
 
-### Privileged 정보
+## 5. 미션·채점 요약
 
-- `ObjectStatus` 등 privileged 토픽은 **학습·로깅 전용**
-- **추론·배포 경로에서 사용 금지**
+![주행 경로](./competition/images/스크린샷%202026-06-30%20111239.png)
 
-## 5. 주행 불능·체크포인트
+| 미션 | 핵심 |
+|------|------|
+| 출발 | 1분 내 경로 **5%** 미통과 → **주행 실패** |
+| 속도 | 60 kph (톨게이트 구간 제외), 초과 시 15초+. 하이패스 30·Foggy 감속 **별도 의무 없음** |
+| 신호 | 정지선 통과 시점 신호, 미준수 15초 |
+| 차로 | 3초 접촉마다 5초. 차선변경 **시간제한 없음**. **GPS 음영(터널) 실선 미적용** |
+| 장애물 | 충돌마다 15초 (CollisionData) |
+| 끼어들기 / NPC | 회전교차로·고속도로 외에도 NPC **추가 가능** |
+| GPS 음영 | Blackout, 랜덤 미션 |
+| 제한시간 | **15분** |
+
+**순위:** 총 주행시간 = 실제 + 패널티. 완주 시 **2회 중 최단**.
+
+**Noise:** GPS·IMU만 (LiDAR·Camera 없음). 상세 Q&A는 로컬 `docs/competition/faq-official.md`.
+
+전역 경로: `2026_molit_comp_global_path.txt` — [competition-data.md](./competition-data.md)
+
+## 6. 주행 불능·체크포인트
+
+![체크포인트](./competition/images/스크린샷%202026-07-13%20162644.png)
 
 | 상황 | 처리 |
 |------|------|
-| 주행 불능 판정 | **10초 후** 마지막 체크포인트로 복귀 |
-| 동일 CP 3회 복귀 후 진행 불가 | **다음 체크포인트**로 스킵 (순위 별도) |
-| 시뮬/하드웨어 이슈 | 운영 판단, 해당 차시 **무효 후 재주행** |
+| 주행 불능 | CP 복귀 (승인, **15초 패널티**) |
+| 시뮬/하드웨어 이슈 | 차시 무효, 재주행 |
 
-**주행 불능 기준**
-1. 바퀴 4개가 중앙선·실선 등 **주행 영역 이탈**
-2. 가로등·건물·정적 장애물 충돌로 **경로 복귀 불가**
-3. 체크포인트 **불연속 통과**
-4. 위반 시 차량 **강제 정지** → CP 복귀 시 해제
+**불능 기준:** 영역 이탈, 정적 충돌로 복귀 불가, CP 불연속 통과
 
-## 6. 당일 운영 절차 (요약)
+## 7. 당일 운영 절차 (요약)
 
-1. Operator 입장 → PC 수령·세팅
-2. 운영 요원: 외장 HDD → 시나리오(json), 센서세팅(json), 판정프로그램(Unity)
-3. 미션 시나리오 Load
-4. Operator: ros_bridge 실행, 알고리즘 실행 준비
-5. 센서·네트워크 세팅 및 연결 확인
-6. Keyboard 모드 (Ego → keyboard + P기어)
-7. **자율주행 코드 실행 후 PC 조작 불가**
-8. 판정 프로그램 Reset 후 시작 → ExternalCtrl → 주행
-9. 미션별 시나리오는 **상이할 수 있음**
+1. Operator PC 수령·세팅
+2. 운영: 시나리오 Load, 센서셋 Load, keyboard+P
+3. 네트워크 확인 → 알고리즘 실행 (**이후 조작 불가**)
+4. 판정 Reset·시작 → 주행 → 점수 저장
+5. 2회차 반복
 
-## 7. 개발 체크리스트
+## 8. 개발 체크리스트
 
-- [ ] Ubuntu 20.04 + ROS Noetic (대회는 **네이티브 PC**)
-- [ ] 연습용 판정 프로그램으로 **LAN 연결** 검증
-- [ ] UDP 및/또는 ROS 센서 파이프라인
-- [ ] rosbridge (옵션) 동작
-- [ ] `/Ctrl_cmd` longi type **1**
-- [ ] 화면 송출 부하 고려한 실시간 성능 (10Hz+)
-- [ ] HDMI 듀얼 출력 가능 GPU
-- [ ] Python **3.8** / morai_msgs **beta_drive**
+- [ ] UDP 센서·제어 (본선 허용 채널만)
+- [ ] `2026_molit_comp_cam_set.json` Load·포트 매칭
+- [ ] `2026_molit_comp_global_path.txt` → planner 입력
+- [ ] `2026_molit_comp_sample_scene.json` 시뮬 리허설
+- [ ] 연습용 판정 프로그램 LAN 검증 (9월 현장 점검)
+- [ ] morai_msgs **`beta_drive`** (개발용 ROS) — [morai-msgs-beta-policy.md](./morai-msgs-beta-policy.md)
 
-## 8. MORAI 참고 저장소
+## 9. MORAI 참고
 
 | 용도 | GitHub | 브랜치 |
 |------|--------|--------|
 | morai_msgs | [MORAI-ROS_morai_msgs](https://github.com/MORAI-Autonomous/MORAI-ROS_morai_msgs) | `beta_drive` |
-| UDP 예제 | [MORAI-NetworkModule](https://github.com/MORAI-Autonomous/MORAI-NetworkModule) | `24.R2.0` |
-| Python 예제 | [beginner_tutorials_answer](https://github.com/MORAI-EDU/beginner_tutorials_answer) | `main` |
+| UDP | [MORAI-NetworkModule](https://github.com/MORAI-Autonomous/MORAI-NetworkModule) | `24.R2.0` |
+| Python | [beginner_tutorials_answer](https://github.com/MORAI-EDU/beginner_tutorials_answer) | `main` |
+
+> © 2026 MORAI Inc. · 문의: 대회 카카오톡 / 디스코드
